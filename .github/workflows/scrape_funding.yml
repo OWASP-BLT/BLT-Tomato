@@ -3,6 +3,9 @@ name: Scrape Funding
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  
 jobs:
   parse_repos:
     runs-on: ubuntu-latest
