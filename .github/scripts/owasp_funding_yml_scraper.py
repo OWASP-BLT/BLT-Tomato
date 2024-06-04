@@ -33,7 +33,9 @@ def extract_github_links(url, project_name):
 def check_funding_file(repo_name):
     funding_url = f'https://raw.githubusercontent.com/{ORG_NAME}/{repo_name}/master/.github/FUNDING.yml'
     response = requests.get(funding_url)
-    return response.status_code == 200
+    if response.status_code == 200:
+        return funding_url
+    return None
 
 file_path = 'www_project_repos.json'
 default_data = get_owasp_repos()
@@ -50,22 +52,22 @@ project_links = []
 
 for project in data:
     project_name = project['name']
+    if project_name.startswith('www-'):
+        print(f"Skipping repository: {project_name}")
+        continue
+
     print("project name", project_name)
     github_url = project['html_url']
     
     repo_links = extract_github_links(github_url, project_name)
-    if repo_links:  # Only append projects with GitHub links
-        project_repos = []
-        for repo in repo_links:
-            funding_exists = check_funding_file(repo.split('/')[-1])
-            project_repos.append({
-                'repo_url': repo,
-                'funding_file': funding_exists
+    for repo in repo_links:
+        repo_name = '/'.join(repo.split('/')[-2:])
+        funding_url = check_funding_file(repo_name)
+        if funding_url:
+            project_links.append({
+                'project_name': project_name,
+                'funding_url': funding_url
             })
-        project_links.append({
-            'project_name': project_name,
-            'repos': project_repos
-        })
 
 output_file = 'project_repos_links.json'
 with open(output_file, 'w') as f:
