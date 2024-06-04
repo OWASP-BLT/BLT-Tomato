@@ -1,0 +1,11 @@
+[
+  {
+    "project_name": "Sample Project",
+    "repos": [
+      {
+        "repo_url": "https://github.com/owasp/owasp.github.io",
+        "funding_file": true
+      }
+    ]
+  }
+]
