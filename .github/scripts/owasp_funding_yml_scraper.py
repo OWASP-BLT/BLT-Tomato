@@ -1,5 +1,6 @@
 import json
 import re
+import os
 import requests
 from bs4 import BeautifulSoup
 
@@ -22,7 +23,20 @@ def check_funding_file(repo_url):
     response = requests.get(funding_url)
     return response.status_code == 200
 
-with open('www_project_repos.json', 'r') as f:
+file_path = 'www_project_repos.json'
+default_data = [
+    {
+        "name": "Sample Project",
+        "html_url": "https://github.com/OWASP/SampleProject"
+    }
+]
+
+if not os.path.exists(file_path):
+    with open(file_path, 'w') as f:
+        json.dump(default_data, f, indent=2)
+    print(f"The file '{file_path}' did not exist and has been created with default data. Please update it with your project information.")
+
+with open(file_path, 'r') as f:
     data = json.load(f)
 
 project_links = []
@@ -46,5 +60,8 @@ for project in data:
             'repos': project_repos
         })
 
-with open('project_repos_links.json', 'w') as f:
+output_file = 'project_repos_links.json'
+with open(output_file, 'w') as f:
     json.dump(project_links, f, indent=2)
+
+print(f"Output written to '{output_file}'")
