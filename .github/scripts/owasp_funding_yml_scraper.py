@@ -7,7 +7,7 @@ ORG_NAME = "OWASP"
 ADDITIONAL_PROJECTS = [
     {"name": "Juice Shop", "repo_url": "https://github.com/bkimminich/juice-shop"},
     {"name": "MAS", "repo_url": "https://github.com/OWASP/owasp-masvs"},
-    {"name": "BLT", "repo_url": "https://github.com/OWASP/BLT"},
+    {"name": "BLT", "repo_url": "https://github.com/OWASP-BLT/BLT"},
     {"name": "SAMM", "repo_url": "https://github.com/OWASP/samm"},
     {"name": "CycloneDX", "repo_url": "https://github.com/CycloneDX/cyclonedx-cli"},
     {"name": "Dependency-Track", "repo_url": "https://github.com/DependencyTrack/dependency-track"},
