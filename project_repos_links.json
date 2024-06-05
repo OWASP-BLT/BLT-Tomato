@@ -1,1 +1,70 @@
-[]
+[
+  {
+    "project_name": "O-Saft",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/O-Saft/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "OWASP-VWAD",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/OWASP-VWAD/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "ASVS",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/ASVS/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "ZSC",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/ZSC/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "Top10",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/Top10/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "owasp-masvs",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/owasp-masvs/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "owasp-mastg",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/owasp-mastg/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "Nettacker",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/Nettacker/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "wstg",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/wstg/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "Python-Honeypot",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/Python-Honeypot/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "API-Security",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/API-Security/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "Intelligent-Intrusion-Detection-System",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/Intelligent-Intrusion-Detection-System/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "owasp.github.io",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/owasp.github.io/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "wrongsecrets",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/wrongsecrets/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "wrongsecrets-binaries",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/wrongsecrets-binaries/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "wrongsecrets-ctf-party",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/wrongsecrets-ctf-party/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "secure-coding-practices-quick-reference-guide",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/secure-coding-practices-quick-reference-guide/master/.github/FUNDING.yml"
+  }
+]
