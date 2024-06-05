@@ -34,5 +34,6 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add project_repos_links.json
+        git add index.html
         git commit -m "Update repository status" || echo "No changes to commit"
         git push
