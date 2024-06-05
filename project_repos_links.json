@@ -102,16 +102,16 @@
     "funding_details": "https://owasp.org/donate/?reponame=www-project-secure-coding-practices-quick-reference-guide&title=OWASP+Secure+Coding+Practices+Quick+Reference+Guide, OWASP"
   },
   {
-    "project_name": "Juice Shop",
-    "repo_url": "https://github.com/juice-shop/juice-shop",
-    "funding_url": "https://raw.githubusercontent.com/juice-shop/juice-shop/master/.github/FUNDING.yml",
-    "funding_details": "https://sponsor.owasp-juice.shop, OWASP"
-  },
-  {
     "project_name": "BLT",
     "repo_url": "https://github.com/OWASP-BLT/BLT",
     "funding_url": "https://raw.githubusercontent.com/OWASP-BLT/BLT/master/.github/FUNDING.yml",
     "funding_details": "https://owasp.org/donate?reponame=www-project-bug-logging-tool&title=OWASP+Bug+logging+tool"
+  },
+  {
+    "project_name": "Juice Shop",
+    "repo_url": "https://github.com/juice-shop/juice-shop",
+    "funding_url": "https://raw.githubusercontent.com/juice-shop/juice-shop/master/.github/FUNDING.yml",
+    "funding_details": "https://sponsor.owasp-juice.shop, OWASP"
   },
   {
     "project_name": "ModSecurity Core Rule Set",
