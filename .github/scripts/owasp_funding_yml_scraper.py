@@ -33,6 +33,7 @@ def extract_github_links(url, project_name):
 def check_funding_file(repo_name):
     funding_url = f'https://raw.githubusercontent.com/{ORG_NAME}/{repo_name}/master/.github/FUNDING.yml'
     response = requests.get(funding_url)
+    print(f"Checking funding URL: {funding_url} - Status Code: {response.status_code}")
     if response.status_code == 200:
         return funding_url
     return None
@@ -68,6 +69,7 @@ for project in data:
                 'project_name': project_name,
                 'funding_url': funding_url
             })
+            print(f"Added project: {project_name} with funding URL: {funding_url}")
 
 output_file = 'project_repos_links.json'
 with open(output_file, 'w') as f:
