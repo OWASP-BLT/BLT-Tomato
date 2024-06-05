@@ -55,9 +55,9 @@ for project in unique_data:
     project_name = project['name']
     repo_url = project['repo_url']
     
-    if project_name.startswith('www-'):
-        print(f"Skipping repository: {project_name}")
-        continue
+    #if project_name.startswith('www-'):
+    #    print(f"Skipping repository: {project_name}")
+    #    continue
 
     print("project name", project_name)
     funding_url = check_funding_file(repo_url)
