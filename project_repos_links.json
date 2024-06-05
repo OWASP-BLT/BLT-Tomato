@@ -25,7 +25,7 @@
     "funding_url": "https://raw.githubusercontent.com/OWASP/Top10/master/.github/FUNDING.yml"
   },
   {
-    "project_name": "owasp-masvs",
+    "project_name": "MAS",
     "repo_url": "https://github.com/OWASP/owasp-masvs",
     "funding_url": "https://raw.githubusercontent.com/OWASP/owasp-masvs/master/.github/FUNDING.yml"
   },
@@ -65,7 +65,7 @@
     "funding_url": "https://raw.githubusercontent.com/OWASP/owasp.github.io/master/.github/FUNDING.yml"
   },
   {
-    "project_name": "wrongsecrets",
+    "project_name": "Wrongsecrets",
     "repo_url": "https://github.com/OWASP/wrongsecrets",
     "funding_url": "https://raw.githubusercontent.com/OWASP/wrongsecrets/master/.github/FUNDING.yml"
   },
@@ -83,5 +83,20 @@
     "project_name": "secure-coding-practices-quick-reference-guide",
     "repo_url": "https://github.com/OWASP/secure-coding-practices-quick-reference-guide",
     "funding_url": "https://raw.githubusercontent.com/OWASP/secure-coding-practices-quick-reference-guide/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "Juice Shop",
+    "repo_url": "https://github.com/bkimminich/juice-shop",
+    "funding_url": "https://raw.githubusercontent.com/bkimminich/juice-shop/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "BLT",
+    "repo_url": "https://github.com/OWASP-BLT/BLT",
+    "funding_url": "https://raw.githubusercontent.com/OWASP-BLT/BLT/master/.github/FUNDING.yml"
+  },
+  {
+    "project_name": "ModSecurity Core Rule Set",
+    "repo_url": "https://github.com/coreruleset/coreruleset",
+    "funding_url": "https://raw.githubusercontent.com/coreruleset/coreruleset/master/.github/FUNDING.yml"
   }
 ]
