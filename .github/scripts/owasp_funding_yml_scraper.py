@@ -5,7 +5,7 @@ import requests
 GITHUB_API_URL = "https://api.github.com"
 ORG_NAME = "OWASP"
 ADDITIONAL_PROJECTS = [
-    {"name": "Juice Shop", "repo_url": "https://github.com/bkimminich/juice-shop"},
+    {"name": "Juice Shop", "repo_url": "https://github.com/juice-shop/juice-shop"},
     {"name": "MAS", "repo_url": "https://github.com/OWASP/owasp-masvs"},
     {"name": "BLT", "repo_url": "https://github.com/OWASP-BLT/BLT"},
     {"name": "SAMM", "repo_url": "https://github.com/OWASP/samm"},
@@ -55,9 +55,9 @@ for project in unique_data:
     project_name = project['name']
     repo_url = project['repo_url']
     
-    #if project_name.startswith('www-'):
-    #    print(f"Skipping repository: {project_name}")
-    #    continue
+    if project_name.startswith('www-'):
+        print(f"Skipping repository: {project_name}")
+        continue
 
     print("project name", project_name)
     funding_url = check_funding_file(repo_url)
@@ -140,7 +140,7 @@ html_content = """
 </head>
 <body>
     <header>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Emoji_u1f345.svg/120px-Emoji_u1f345.svg.png" alt="Tomato" width="40" height="40">
+        <img src="https://img.icons8.com/emoji/48/000000/tomato-emoji.png" alt="Tomato" width="40" height="40">
         <h1>BLT Tomato - this is an OWASP BLT project created to help other OWASP projects.</h1>
     </header>
     <main>
@@ -148,8 +148,8 @@ html_content = """
         <ul>
 """
 
-for project in project_links:
-    html_content += f'<li><a href="{project["repo_url"]}">{project["project_name"]}</a> <a href="{project["funding_url"]}" class="heart-icon">&#10084;</a></li>\n'
+for index, project in enumerate(project_links, start=1):
+    html_content += f'<li>{index}. <a href="{project["repo_url"]}">{project["project_name"]}</a> <a href="{project["funding_url"]}" class="heart-icon">&#10084;</a> <span>{project["funding_url"]}</span></li>\n'
 
 html_content += """
         </ul>
