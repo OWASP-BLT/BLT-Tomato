@@ -1,6 +1,7 @@
 import json
 import os
 import requests
+import yaml
 
 GITHUB_API_URL = "https://api.github.com"
 ORG_NAME = "OWASP"
@@ -36,6 +37,19 @@ def check_funding_file(repo_url):
         return funding_url
     return None
 
+def parse_funding_file(funding_url):
+    response = requests.get(funding_url)
+    if response.status_code == 200:
+        funding_content = yaml.safe_load(response.text)
+        funding_links = []
+        for key, value in funding_content.items():
+            if isinstance(value, list):
+                funding_links.extend(value)
+            else:
+                funding_links.append(value)
+        return ', '.join(funding_links)
+    return ''
+
 # Fetch OWASP repos
 owasp_repos = get_owasp_repos()
 owasp_repos_data = [
@@ -62,12 +76,14 @@ for project in unique_data:
     print("project name", project_name)
     funding_url = check_funding_file(repo_url)
     if funding_url:
+        funding_details = parse_funding_file(funding_url)
         project_links.append({
             'project_name': project_name,
             'repo_url': repo_url,
-            'funding_url': funding_url
+            'funding_url': funding_url,
+            'funding_details': funding_details
         })
-        print(f"Added project: {project_name} with funding URL: {funding_url}")
+        print(f"Added project: {project_name} with funding details: {funding_details}")
 
 # Write the JSON output file
 output_file = 'project_repos_links.json'
@@ -149,7 +165,7 @@ html_content = """
 """
 
 for index, project in enumerate(project_links, start=1):
-    html_content += f'<li>{index}. <a href="{project["repo_url"]}">{project["project_name"]}</a> <a href="{project["funding_url"]}" class="heart-icon">&#10084;</a> <span>{project["funding_url"]}</span></li>\n'
+    html_content += f'<li>{index}. <a href="{project["repo_url"]}">{project["project_name"]}</a> <a href="{project["funding_url"]}" class="heart-icon">&#10084;</a> <span>{project["funding_details"]}</span></li>\n'
 
 html_content += """
         </ul>
