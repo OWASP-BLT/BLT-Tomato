@@ -27,7 +27,7 @@ jobs:
     - name: Parse repositories
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python .github/scripts/owasp_funding_yml_scraper.py
+      run: python .github/scripts/funding/owasp_funding_yml_scraper.py
         
     - name: Commit and push
       run: |
