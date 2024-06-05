@@ -1,22 +1,28 @@
 import json
-import os
 import requests
 import yaml
 
 GITHUB_API_URL = "https://api.github.com"
 ORG_NAME = "OWASP"
 ADDITIONAL_PROJECTS = [
+    {"name": "ASVS", "repo_url": "https://github.com/OWASP/ASVS"},
+    {"name": "BLT", "repo_url": "https://github.com/OWASP-BLT/BLT"},
+    {"name": "CycloneDX", "repo_url": "https://github.com/CycloneDX/cyclonedx-cli"},
+    {
+        "name": "Dependency-Track",
+        "repo_url": "https://github.com/DependencyTrack/dependency-track",
+    },
     {"name": "Juice Shop", "repo_url": "https://github.com/juice-shop/juice-shop"},
     {"name": "MAS", "repo_url": "https://github.com/OWASP/owasp-masvs"},
-    {"name": "BLT", "repo_url": "https://github.com/OWASP-BLT/BLT"},
+    {
+        "name": "ModSecurity Core Rule Set",
+        "repo_url": "https://github.com/coreruleset/coreruleset",
+    },
+    {"name": "OpenCRE", "repo_url": "https://github.com/OWASP/OpenCRE"},
     {"name": "SAMM", "repo_url": "https://github.com/OWASP/samm"},
-    {"name": "CycloneDX", "repo_url": "https://github.com/CycloneDX/cyclonedx-cli"},
-    {"name": "Dependency-Track", "repo_url": "https://github.com/DependencyTrack/dependency-track"},
     {"name": "Wrongsecrets", "repo_url": "https://github.com/OWASP/wrongsecrets"},
-    {"name": "ModSecurity Core Rule Set", "repo_url": "https://github.com/coreruleset/coreruleset"},
-    {"name": "ASVS", "repo_url": "https://github.com/OWASP/ASVS"},
-    {"name": "OpenCRE", "repo_url": "https://github.com/OWASP/OpenCRE"}
 ]
+
 
 def get_owasp_repos():
     url = f"{GITHUB_API_URL}/orgs/{ORG_NAME}/repos"
@@ -25,51 +31,54 @@ def get_owasp_repos():
         response = requests.get(url)
         response.raise_for_status()
         repos.extend(response.json())
-        url = response.links.get('next', {}).get('url')
+        url = response.links.get("next", {}).get("url")
     return repos
 
+
 def check_funding_file(repo_url):
-    repo_name = '/'.join(repo_url.split('/')[-2:])
-    funding_url = f'https://raw.githubusercontent.com/{repo_name}/master/.github/FUNDING.yml'
+    repo_name = "/".join(repo_url.split("/")[-2:])
+    funding_url = (
+        f"https://raw.githubusercontent.com/{repo_name}/master/.github/FUNDING.yml"
+    )
     response = requests.get(funding_url)
     print(f"Checking funding URL: {funding_url} - Status Code: {response.status_code}")
     if response.status_code == 200:
         return funding_url
-    return None
+
 
 def parse_funding_file(funding_url):
     response = requests.get(funding_url)
     if response.status_code == 200:
         funding_content = yaml.safe_load(response.text)
         funding_links = []
-        for key, value in funding_content.items():
+        for _, value in funding_content.items():
             if isinstance(value, list):
                 funding_links.extend(value)
             else:
                 funding_links.append(value)
-        return ', '.join(funding_links)
-    return ''
+        return ", ".join(funding_links)
+    return ""
+
 
 # Fetch OWASP repos
 owasp_repos = get_owasp_repos()
 owasp_repos_data = [
-    {"name": repo['name'], "repo_url": repo['html_url']}
-    for repo in owasp_repos
+    {"name": repo["name"], "repo_url": repo["html_url"]} for repo in owasp_repos
 ]
 
 # Combine OWASP repos and additional projects
 data = owasp_repos_data + ADDITIONAL_PROJECTS
 
 # Remove duplicates based on the 'repo_url' key
-unique_data = {project['repo_url']: project for project in data}.values()
+unique_data = {project["repo_url"]: project for project in data}.values()
 
 project_links = []
 
 for project in unique_data:
-    project_name = project['name']
-    repo_url = project['repo_url']
-    
-    if project_name.startswith('www-'):
+    project_name = project["name"]
+    repo_url = project["repo_url"]
+
+    if project_name.startswith("www-"):
         print(f"Skipping repository: {project_name}")
         continue
 
@@ -77,17 +86,19 @@ for project in unique_data:
     funding_url = check_funding_file(repo_url)
     if funding_url:
         funding_details = parse_funding_file(funding_url)
-        project_links.append({
-            'project_name': project_name,
-            'repo_url': repo_url,
-            'funding_url': funding_url,
-            'funding_details': funding_details
-        })
+        project_links.append(
+            {
+                "project_name": project_name,
+                "repo_url": repo_url,
+                "funding_url": funding_url,
+                "funding_details": funding_details,
+            }
+        )
         print(f"Added project: {project_name} with funding details: {funding_details}")
 
 # Write the JSON output file
-output_file = 'project_repos_links.json'
-with open(output_file, 'w') as f:
+output_file = "project_repos_links.json"
+with open(output_file, "w") as f:
     json.dump(project_links, f, indent=2)
 
 print(f"Output written to '{output_file}'")
@@ -164,7 +175,9 @@ html_content = """
         <ul>
 """
 
-for index, project in enumerate(project_links, start=1):
+for index, project in enumerate(
+    sorted(project_links, key=lambda p: p["project_name"]), start=1
+):
     html_content += f'<li>{index}. <a href="{project["repo_url"]}">{project["project_name"]}</a> <a href="{project["funding_url"]}" class="heart-icon">&#10084;</a> <span>{project["funding_details"]}</span></li>\n'
 
 html_content += """
@@ -177,7 +190,7 @@ html_content += """
 </html>
 """
 
-with open('index.html', 'w') as f:
+with open("index.html", "w") as f:
     f.write(html_content)
 
 print("index.html file has been created.")
