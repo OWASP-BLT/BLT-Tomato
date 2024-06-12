@@ -153,6 +153,14 @@ html_content = """
             margin-left: 10px;
             text-decoration: none;
         }
+        .donate-button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #d9534f;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
         footer {
             text-align: center;
             padding: 20px;
@@ -178,7 +186,14 @@ html_content = """
 for index, project in enumerate(
     sorted(project_links, key=lambda p: p["project_name"]), start=1
 ):
-    html_content += f'<li>{index}. <a href="{project["repo_url"]}">{project["project_name"]}</a> <a href="{project["funding_url"]}" class="heart-icon">&#10084;</a> <span>{project["funding_details"]}</span></li>\n'
+    funding_links_html = ""
+    funding_details = project["funding_details"].split(", ")
+    for link in funding_details:
+        if "https://owasp.org/donate/" in link:
+            funding_links_html += f'<a href="{link}" class="donate-button">Donate</a> '
+        else:
+            funding_links_html += f'<a href="{link}" class="heart-icon">&#10084;</a> '
+    html_content += f'<li>{index}. <a href="{project["repo_url"]}">{project["project_name"]}</a> {funding_links_html}<span>{project["funding_details"]}</span></li>\n'
 
 html_content += """
         </ul>
