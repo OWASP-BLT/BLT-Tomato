@@ -118,5 +118,11 @@
     "repo_url": "https://github.com/coreruleset/coreruleset",
     "funding_url": "https://raw.githubusercontent.com/coreruleset/coreruleset/master/.github/FUNDING.yml",
     "funding_details": "https://coreruleset.org/donate"
+  },
+  {
+    "project_name": "AMASS",
+    "repo_url": "https://github.com/owasp-amass/amass",
+    "funding_url": "https://raw.githubusercontent.com/owasp-amass/amass/master/.github/FUNDING.yml",
+    "funding_details": "https://owasp.org/donate/?reponame=www-project-amass&title=OWASP+Amass, OWASP"
   }
 ]
