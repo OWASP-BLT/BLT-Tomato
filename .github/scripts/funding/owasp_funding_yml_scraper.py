@@ -21,6 +21,7 @@ ADDITIONAL_PROJECTS = [
     {"name": "OpenCRE", "repo_url": "https://github.com/OWASP/OpenCRE"},
     {"name": "SAMM", "repo_url": "https://github.com/OWASP/samm"},
     {"name": "Wrongsecrets", "repo_url": "https://github.com/OWASP/wrongsecrets"},
+    {"name": "AMASS", "repo_url": "https://github.com/owasp-amass/amass"},
 ]
 
 
