@@ -102,6 +102,12 @@
     "funding_details": "https://owasp.org/donate/?reponame=www-project-secure-coding-practices-quick-reference-guide&title=OWASP+Secure+Coding+Practices+Quick+Reference+Guide, OWASP"
   },
   {
+    "project_name": "Nest",
+    "repo_url": "https://github.com/OWASP/Nest",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/Nest/master/.github/FUNDING.yml",
+    "funding_details": "https://owasp.org/donate/?reponame=www-project-nest&title=OWASP+Nest"
+  },
+  {
     "project_name": "BLT",
     "repo_url": "https://github.com/OWASP-BLT/BLT",
     "funding_url": "https://raw.githubusercontent.com/OWASP-BLT/BLT/master/.github/FUNDING.yml",
