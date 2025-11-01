@@ -30,16 +30,16 @@
     "funding_details": "https://owasp.org/donate/?reponame=www-project-top-ten&title=OWASP+Top+Ten, OWASP"
   },
   {
-    "project_name": "MAS",
-    "repo_url": "https://github.com/OWASP/owasp-masvs",
-    "funding_url": "https://raw.githubusercontent.com/OWASP/owasp-masvs/master/.github/FUNDING.yml",
+    "project_name": "masvs",
+    "repo_url": "https://github.com/OWASP/masvs",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/masvs/master/.github/FUNDING.yml",
     "funding_details": "https://www.icrc.org/en/donate/ukraine"
   },
   {
-    "project_name": "owasp-mastg",
-    "repo_url": "https://github.com/OWASP/owasp-mastg",
-    "funding_url": "https://raw.githubusercontent.com/OWASP/owasp-mastg/master/.github/FUNDING.yml",
-    "funding_details": "https://www.icrc.org/en/donate/ukraine"
+    "project_name": "mastg",
+    "repo_url": "https://github.com/OWASP/mastg",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/mastg/master/.github/FUNDING.yml",
+    "funding_details": "https://mas.owasp.org/donate/how_to_donate/"
   },
   {
     "project_name": "Nettacker",
@@ -84,6 +84,12 @@
     "funding_details": "https://owasp.org/donate/?reponame=www-project-wrongsecrets&title=OWASP+wrongsecrets, https://www.icrc.org/en/donate/ukraine, OWASP"
   },
   {
+    "project_name": "cornucopia",
+    "repo_url": "https://github.com/OWASP/cornucopia",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/cornucopia/master/.github/FUNDING.yml",
+    "funding_details": "https://owasp.org/donate/?reponame=cornucopia&title=OWASP+Cornucopia, OWASP"
+  },
+  {
     "project_name": "wrongsecrets-binaries",
     "repo_url": "https://github.com/OWASP/wrongsecrets-binaries",
     "funding_url": "https://raw.githubusercontent.com/OWASP/wrongsecrets-binaries/master/.github/FUNDING.yml",
@@ -102,10 +108,22 @@
     "funding_details": "https://owasp.org/donate/?reponame=www-project-secure-coding-practices-quick-reference-guide&title=OWASP+Secure+Coding+Practices+Quick+Reference+Guide, OWASP"
   },
   {
+    "project_name": "maswe",
+    "repo_url": "https://github.com/OWASP/maswe",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/maswe/master/.github/FUNDING.yml",
+    "funding_details": "https://mas.owasp.org/donate/how_to_donate/"
+  },
+  {
     "project_name": "Nest",
     "repo_url": "https://github.com/OWASP/Nest",
     "funding_url": "https://raw.githubusercontent.com/OWASP/Nest/master/.github/FUNDING.yml",
     "funding_details": "https://owasp.org/donate/?reponame=www-project-nest&title=OWASP+Nest"
+  },
+  {
+    "project_name": "AISVS",
+    "repo_url": "https://github.com/OWASP/AISVS",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/AISVS/master/.github/FUNDING.yml",
+    "funding_details": "https://owasp.org/donate/?reponame=www-project-application-security-verification-standard&title=OWASP+Application+Security+Verification+Standard, OWASP"
   },
   {
     "project_name": "BLT",
@@ -118,6 +136,12 @@
     "repo_url": "https://github.com/juice-shop/juice-shop",
     "funding_url": "https://raw.githubusercontent.com/juice-shop/juice-shop/master/.github/FUNDING.yml",
     "funding_details": "https://sponsor.owasp-juice.shop, OWASP"
+  },
+  {
+    "project_name": "MAS",
+    "repo_url": "https://github.com/OWASP/owasp-masvs",
+    "funding_url": "https://raw.githubusercontent.com/OWASP/owasp-masvs/master/.github/FUNDING.yml",
+    "funding_details": "https://www.icrc.org/en/donate/ukraine"
   },
   {
     "project_name": "ModSecurity Core Rule Set",
