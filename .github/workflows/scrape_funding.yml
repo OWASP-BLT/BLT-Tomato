@@ -5,6 +5,10 @@ on:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    # Run every Friday at 1pm EST (18:00 UTC)
+    # Note: EST is UTC-5. During EDT (daylight time), this runs at 2pm EDT.
+    - cron: '0 18 * * 5'
 
 permissions:
   contents: write
