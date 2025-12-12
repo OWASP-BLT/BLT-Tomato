@@ -147,7 +147,7 @@
     "project_name": "ModSecurity Core Rule Set",
     "repo_url": "https://github.com/coreruleset/coreruleset",
     "funding_url": "https://raw.githubusercontent.com/coreruleset/coreruleset/master/.github/FUNDING.yml",
-    "funding_details": "https://coreruleset.org/donate"
+    "funding_details": "https://owasp.org/donate/?reponame=www-project-modsecurity-core-rule-set&title=OWASP+CRS"
   },
   {
     "project_name": "AMASS",
