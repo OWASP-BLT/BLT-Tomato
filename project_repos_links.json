@@ -120,12 +120,6 @@
     "funding_details": "https://owasp.org/donate/?reponame=www-project-nest&title=OWASP+Nest"
   },
   {
-    "project_name": "AISVS",
-    "repo_url": "https://github.com/OWASP/AISVS",
-    "funding_url": "https://raw.githubusercontent.com/OWASP/AISVS/master/.github/FUNDING.yml",
-    "funding_details": "https://owasp.org/donate/?reponame=www-project-application-security-verification-standard&title=OWASP+Application+Security+Verification+Standard, OWASP"
-  },
-  {
     "project_name": "BLT",
     "repo_url": "https://github.com/OWASP-BLT/BLT",
     "funding_url": "https://raw.githubusercontent.com/OWASP-BLT/BLT/master/.github/FUNDING.yml",
