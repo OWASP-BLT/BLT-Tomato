@@ -93,16 +93,36 @@ def send_slack_notification(new_projects):
         }
     ]
     
-    # Add each new project as a section
-    for project in new_projects:
+    # Slack Block Kit limits: max 50 blocks per message, 3000 chars per text field
+    MAX_BLOCKS = 50
+    MAX_DETAIL_LENGTH = 200
+    # Reserve blocks for: header, summary, divider, footer link, and optional overflow note
+    MAX_PROJECT_BLOCKS = MAX_BLOCKS - 5
+
+    # Add each new project as a section (capped to stay within block limit)
+    displayed_projects = new_projects[:MAX_PROJECT_BLOCKS]
+    for project in displayed_projects:
+        funding_details = project["funding_details"]
+        if len(funding_details) > MAX_DETAIL_LENGTH:
+            funding_details = funding_details[:MAX_DETAIL_LENGTH] + "..."
         project_block = {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"*<{project['repo_url']}|{project['project_name']}>*\n{project['funding_details']}"
+                "text": f"*<{project['repo_url']}|{project['project_name']}>*\n{funding_details}"
             }
         }
         blocks.append(project_block)
+
+    remaining = len(new_projects) - len(displayed_projects)
+    if remaining > 0:
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"_...and {remaining} more. View the full list at <https://owasp-blt.github.io/BLT-Tomato/|BLT Tomato>_"
+            }
+        })
     
     # Add a divider and link to the full list
     blocks.extend([
@@ -123,11 +143,28 @@ def send_slack_notification(new_projects):
     }
     
     try:
-        response = requests.post(slack_webhook_url, json=payload)
+        response = requests.post(slack_webhook_url, json=payload, timeout=10)
         response.raise_for_status()
         print(f"Slack notification sent successfully for {len(new_projects)} new project(s)")
     except requests.exceptions.RequestException as e:
-        print(f"Error sending Slack notification: {e}")
+        error_message = f"Error sending Slack notification: {e}"
+        response = getattr(e, "response", None)
+        if response is not None:
+            status_code = getattr(response, "status_code", "unknown")
+            try:
+                response_text = response.text
+            except Exception:
+                response_text = "<unavailable>"
+            if response_text is None:
+                response_text_display = "<no response body>"
+            else:
+                max_length = 500
+                truncated_text = response_text[:max_length]
+                if len(response_text) > max_length:
+                    truncated_text += "... [truncated]"
+                response_text_display = truncated_text
+            error_message += f" | HTTP status: {status_code}, response body: {response_text_display}"
+        print(error_message)
 
 
 def load_existing_projects(output_file):
@@ -141,11 +178,11 @@ def load_existing_projects(output_file):
     return []
 
 
-def find_new_projects(old_projects, new_projects):
-    """Find projects that are in new_projects but not in old_projects."""
+def find_new_projects(old_projects, candidate_projects):
+    """Find projects that are in candidate_projects but not in old_projects."""
     old_repo_urls = {project["repo_url"] for project in old_projects}
     new_projects_list = [
-        project for project in new_projects 
+        project for project in candidate_projects
         if project["repo_url"] not in old_repo_urls
     ]
     return new_projects_list
