@@ -1,4 +1,5 @@
 import json
+import os
 import requests
 import yaml
 
@@ -61,6 +62,132 @@ def parse_funding_file(funding_url):
     return ""
 
 
+def send_slack_notification(new_projects):
+    """Send Slack notification for new projects seeking funding."""
+    slack_webhook_url = os.environ.get("SLACK_WEBHOOK_URL")
+    
+    if not slack_webhook_url:
+        print("SLACK_WEBHOOK_URL not set, skipping Slack notification")
+        return
+    
+    if not new_projects:
+        print("No new projects to notify about")
+        return
+    
+    # Build the message
+    blocks = [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "🍅 New OWASP Projects Seeking Funding!",
+                "emoji": True
+            }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*{len(new_projects)}* new project(s) are now looking for funding:"
+            }
+        }
+    ]
+    
+    # Slack Block Kit limits: max 50 blocks per message, 3000 chars per text field
+    MAX_BLOCKS = 50
+    MAX_DETAIL_LENGTH = 200
+    # Reserve blocks for: header, summary, divider, footer link, and optional overflow note
+    MAX_PROJECT_BLOCKS = MAX_BLOCKS - 5
+
+    # Add each new project as a section (capped to stay within block limit)
+    displayed_projects = new_projects[:MAX_PROJECT_BLOCKS]
+    for project in displayed_projects:
+        funding_details = project["funding_details"]
+        if len(funding_details) > MAX_DETAIL_LENGTH:
+            funding_details = funding_details[:MAX_DETAIL_LENGTH] + "..."
+        project_block = {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*<{project['repo_url']}|{project['project_name']}>*\n{funding_details}"
+            }
+        }
+        blocks.append(project_block)
+
+    remaining = len(new_projects) - len(displayed_projects)
+    if remaining > 0:
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"_...and {remaining} more. View the full list at <https://owasp-blt.github.io/BLT-Tomato/|BLT Tomato>_"
+            }
+        })
+    
+    # Add a divider and link to the full list
+    blocks.extend([
+        {
+            "type": "divider"
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "View the full list at <https://owasp-blt.github.io/BLT-Tomato/|BLT Tomato>"
+            }
+        }
+    ])
+    
+    payload = {
+        "blocks": blocks
+    }
+    
+    try:
+        response = requests.post(slack_webhook_url, json=payload, timeout=10)
+        response.raise_for_status()
+        print(f"Slack notification sent successfully for {len(new_projects)} new project(s)")
+    except requests.exceptions.RequestException as e:
+        error_message = f"Error sending Slack notification: {e}"
+        response = getattr(e, "response", None)
+        if response is not None:
+            status_code = getattr(response, "status_code", "unknown")
+            try:
+                response_text = response.text
+            except Exception:
+                response_text = "<unavailable>"
+            if response_text is None:
+                response_text_display = "<no response body>"
+            else:
+                max_length = 500
+                truncated_text = response_text[:max_length]
+                if len(response_text) > max_length:
+                    truncated_text += "... [truncated]"
+                response_text_display = truncated_text
+            error_message += f" | HTTP status: {status_code}, response body: {response_text_display}"
+        print(error_message)
+
+
+def load_existing_projects(output_file):
+    """Load existing projects from the JSON file."""
+    if os.path.exists(output_file):
+        try:
+            with open(output_file, "r") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Error loading existing projects: {e}")
+    return []
+
+
+def find_new_projects(old_projects, candidate_projects):
+    """Find projects that are in candidate_projects but not in old_projects."""
+    old_repo_urls = {project["repo_url"] for project in old_projects}
+    new_projects_list = [
+        project for project in candidate_projects
+        if project["repo_url"] not in old_repo_urls
+    ]
+    return new_projects_list
+
+
 # Fetch OWASP repos
 owasp_repos = get_owasp_repos()
 owasp_repos_data = [
@@ -72,6 +199,10 @@ data = owasp_repos_data + ADDITIONAL_PROJECTS
 
 # Remove duplicates based on the 'repo_url' key
 unique_data = {project["repo_url"]: project for project in data}.values()
+
+# Load existing projects before generating new list
+output_file = "project_repos_links.json"
+existing_projects = load_existing_projects(output_file)
 
 project_links = []
 
@@ -97,8 +228,15 @@ for project in unique_data:
         )
         print(f"Added project: {project_name} with funding details: {funding_details}")
 
+# Find new projects and send Slack notification
+new_projects = find_new_projects(existing_projects, project_links)
+if new_projects:
+    print(f"Found {len(new_projects)} new project(s) seeking funding")
+    send_slack_notification(new_projects)
+else:
+    print("No new projects found")
+
 # Write the JSON output file
-output_file = "project_repos_links.json"
 with open(output_file, "w") as f:
     json.dump(project_links, f, indent=2)
 
